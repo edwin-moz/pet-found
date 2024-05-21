@@ -1,53 +1,76 @@
+`Any terminal commands or python code will appear in code blocks like this one`
+
 <!-- this area will be the app description -->
 
-USING SQL LITE
+# PET-FOUND
 
-<!-- this is how i setup the project -->
+_This is one of my solo projects using Python and Django to make a RESTful API. The purpose of this project is to showcase the steps taken to setup a project from start to finish. At the end of the project I will show you how to clone it to your computer and test out the project yourself using VS Code._
 
-The steps using \* will be using the terminal on a mac
+Technology we will be using:
 
-This project assumes you have installed Python / Django / Pip
+1. Python
+2. Django
+3. SQLite
 
-In your computer's workspace (where you store your projects) create a folder with your project's name: ~/workspace/python/pet-found
+Tools we will be using:
 
-<!-- In your terminal run the following commands to install the shell -> install django in your project -> add a django project in the current directory (app) -> add a python app (api) -> install restframework -> install django-cors-headers -->
+1. Visual Studio Code
+2. Terminal
 
-- pipenv shell
-- pipenv install django
-- django-admin startproject app .
-- python3 manage.py startapp api
-- pip install djangorestframework
-- pip install django-cors-headers
+## Project setup
 
-<!-- Delete the following files in the api folder -->
+This project will assume you have installed Python / Django / Pip /
 
-views.py
-admin.py
-models.py
-test.py
+1. In your computer's workspace (where you store your projects) create a folder with your project's name: ~/workspace/python/pet-found
 
-<!-- Open the project in visual studio -->
+2. In your terminal cd into the directory and run the command to install the shell -> install django -> add a django project to the directory (which we will call app) -> add a python app (which we will call api) -> install rest framework -> install django cors headers
 
-1. Select the project interpreter in visual studio
-2. In the debug tools and assets add a Django debug file for visual studio code.
+```bash
+pipenv shell
+pipenv install django
+django-admin startproject app .
+python3 manage.py startapp api
+pip install djangorestframework
+pip install django-cors-headers
+```
 
-<!-- In the app/settings.py file add the following -->
+3. Once the installation is done open up the propject in visual studio code
 
-<!-- Note: Some authentication stuff is here incase I end up using it in the near future -->
+```bash
+code .
+```
 
-1. Add apps to the INSTALLED_APPS variable:
+4. Delete the following files for a fresh start:
 
+- views\.py
+- admin\.py
+- models\.py
+- test\.py
+
+<!-- Do i need an interpreter??? -->
+
+<!-- 1. Select the project interpreter in visual studio -->
+
+5. In the debug tools create a launch.json file -> select the python debugger -> select Django
+
+6. In the app/settings.py file you will need to do the following:
+
+_Note: Some authentication stuff is here incase I end up using it in the near future_
+
+- Add the following apps to the INSTALLED_APPS variable:
+
+```python
 # project setup
-
 "rest_framework",
 "rest_framework.authtoken",
 "corsheaders",
 "api",
+```
 
-2. Add the rest framework variable underneath the INSTALLED_APPS variable:
+- Add the REST_FRAMEWORK variable underneath the INSTALLED_APPS variable:
 
+```python
 # project setup
-
 REST_FRAMEWORK = {
 "DEFAULT_AUTHENTICATION_CLASSES": (
 "rest_framework.authentication.TokenAuthentication",
@@ -56,38 +79,45 @@ REST_FRAMEWORK = {
 "rest_framework.permissions.IsAuthenticated",
 ],
 }
+```
 
-3. Add the cors variable underneath the REST_FRAMEWORK variable:
+- Add the CORS_ORIGIN_WHITELIST variable underneath the REST_FRAMEWORK variable:
 
+```python
 # project setup
-
 CORS_ORIGIN_WHITELIST = (
 "http://localhost:3000",
 "http://127.0.0.1:3000",
 "http://localhost:5173",
 "http://127.0.0.1:5173",
 )
+```
 
-4. Add the following to the MIDDLEWARE variable:
+- Add the following to the MIDDLEWARE variable:
 
+```python
 # project setup
-
 'corsheaders.middleware.CorsMiddleware',
+```
 
-Add a models folder and package file in the api folder example: ~project/api/models/\_\_init\_\_.py
+7. Add a models folder and package file in the api folder example: ~project/api/models/\_\_init\_\_.py
 
-I added the 2 models and imported them into the package file.
+_More information about the models in the Models section_
 
-<!-- More information about the models in the Models section -->
+8. I added the 2 models and imported them into the package file (\_\_init\_\_.py)
 
-Once the models are finished, migrate the data with the following steps:
+9. Once the models are finished, migrate the data using the following steps:
 
-In the terminal run the following commands:
+- In the terminal run the following commands:
 
-1. python3 manage.py makemigrations
-2. python3 manage.py migrate
+```bash
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
 
-Once the migrations were done I started with the views to display data using postman
+# THIS IS WHERE I LEFT OFF
+
+10. Once the migrations are done I started with the views to display data using postman.
 
 Add a views folder and package file in the api folder: ~project/api/views/\_\_init\_\_.py
 
