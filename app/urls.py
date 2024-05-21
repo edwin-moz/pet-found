@@ -19,9 +19,13 @@ from django.contrib import admin
 from django.urls import include, path
 # project setup
 from rest_framework.routers import DefaultRouter
+from api.views import PetBehaviorViewSet, PostViewSet
 
 # project setup
 router = DefaultRouter(trailing_slash=False)
+# initial view setup
+router.register(r"petbehaviors", PetBehaviorViewSet, "petbehavior")
+router.register(r"posts", PostViewSet, "post")
 
 urlpatterns = [
     # project setup (start fresh)

@@ -1,0 +1,16 @@
+[
+    {
+        "model": "api.petbehavior",
+        "pk": 1,
+        "fields": {
+            "behavior": "Runs away"
+        }
+    },
+    {
+        "model": "api.petbehavior",
+        "pk": 2,
+        "fields": {
+            "behavior": "Friendly"
+        }
+    }
+]

@@ -1,0 +1,34 @@
+[
+    {
+        "model": "api.post",
+        "pk": 1,
+        "fields": {
+            "contact_email": "example@email.com",
+            "date_added": "2023-05-23 09:06:17",
+            "pet_behavior": 1,
+            "pet_age": 1,
+            "pet_breed": "Lab",
+            "pet_color": "Brown with white spot",
+            "pet_description": "Has a scratch on the right side of his leg",
+            "pet_favorite_snack": "Chicken",
+            "pet_image_url": "https://www.pexels.com/photo/brown-short-coated-dog-on-white-background-3487734/",
+            "pet_name": "Unknown no collar"
+        }
+    },
+    {
+        "model": "api.post",
+        "pk": 2,
+        "fields": {
+            "contact_email": "email@email.com",
+            "date_added": "2023-11-11 09:18:52",
+            "pet_behavior": 2,
+            "pet_age": 2,
+            "pet_breed": "Great dane",
+            "pet_color": "Brown with black spots",
+            "pet_description": "Can speak...",
+            "pet_favorite_snack": "Scooby snacks",
+            "pet_image_url": "https://www.istockphoto.com/photo/scooby-doo-with-his-kong-gm462275401-32388990?utm_campaign=srp_photos_limitedresults&utm_content=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fscooby%2520doo%2F%3Forientation%3Dsquare&utm_medium=affiliate&utm_source=pexels&utm_term=scooby%20doo",
+            "pet_name": "Scooby Doo"
+        }
+    }
+]
