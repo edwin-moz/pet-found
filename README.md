@@ -49,7 +49,7 @@ code .
 
 <!-- Do i need an interpreter??? -->
 
-<!-- 1. Select the project interpreter in visual studio -->
+<!-- Select the project interpreter in visual studio -->
 
 5. In the debug tools create a launch.json file -> select the python debugger -> select Django
 
@@ -115,64 +115,83 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 ```
 
-# THIS IS WHERE I LEFT OFF
+_Once the migrations were done I proceeded to setup the views._
 
-10. Once the migrations are done I started with the views to display data using postman.
+10. Add a views folder and package file in the api folder: ~project/api/views/\_\_init\_\_.py
 
-Add a views folder and package file in the api folder: ~project/api/views/\_\_init\_\_.py
+_More information about the views in the Views section_
 
-I added the view to display GET the pet behavior and imported it to the package file.
+_At this point we can update our urls\.py file to include our newest view._
 
-<!-- More information about the views in the Views section -->
+11. Imported the newly created view into the urls\.py file
 
-At this point we can update our urls.py file to include our newest view.
-
-<!-- I added this import and I added this register right after the router variable was created -->
-
+```python
 from api.views import PetBehaviorViewSet
+```
 
-# initial view setup
+12. Register the new route
 
+```python
 router.register(r"petbehaviors", PetBehaviorViewSet, "petbehavior")
+```
 
-I tested the first endpoint using Postman and it worked! (right now it is an empty array with a status of 200)
+13. Test your endpoint!
+
+_I tested the first endpoint using Postman and it worked! (right now it is an empty array with a status of 200)_
 
 To make the initial data seed easier I am going to be adding initial data in the fixtures folder and a script to run the command.
 
-Make a fixtures folder in the api directory: ~/project/api/fixtures/
+14. Make a fixtures folder in the api directory: ~/project/api/fixtures/
 
-I added a pet_bahaviors.json file to include my initial data for that model.
+15. I added a pet_bahaviors.json file to include my initial data for that model. Here is an example of 1 of them:
 
-In the root directory I added a seed_database.sh file with the following:
+```python
+[
+    {
+        "model": "api.petbehavior",
+        "pk": 1,
+        "fields": {
+            "behavior": "Runs away"
+        }
+    }
+]
+```
+
+16. In the root directory I added a seed_database.sh file with the following:
+
+```python
 #!/bin/bash
-
 rm db.sqlite3
 rm -rf ./api/migrations
 python3 manage.py migrate
 python3 manage.py makemigrations api
 python3 manage.py migrate api
-
 # python3 manage.py loaddata users
-
 # python3 manage.py loaddata tokens
-
 python3 manage.py loaddata pet_behaviors
+```
 
-I commented out users and tokens because we will not be using these at this time.
+_I commented out users and tokens because we will not be using these at this time._
 
-Next I ran this command to make the executable script:
+17. Next I ran this command to make the executable script:
+
+```bash
 chmod u+x ./seed_database.sh
+```
 
-And then I ran this command to test the script:
+18. Next I ran this command to test the script:
+
+```bash
 ./seed_database.sh
+```
 
-It worked! My first model is done, my first view that gets the list is done, and the initial data is seeded for that model!
+It worked! My first model is done, my first view that gets the list is done (empty array), and the initial data is seeded for that model!
 
-Now I am going to do the same with the next model view and test out the endpoint.
+Now I am going to do the same with the next model and view then test out the endpoint.
 
-Great, now that we moved past that we can start working on the rest of the project which consists of also the same thing.
+Great, now that we moved past the initial setup we can start working on the rest of the project which consists of adding more views to the api.
 
-Since the models are finished we just need to add the views to be able to perform CRUD features
+_Since the models are finished we just need to add the views to be able to perform CRUD features_
 
 <!-- INCLUDE SECTION HERE FOR THE MODELS -->
 
@@ -239,3 +258,7 @@ The pet behavior serializer will take care of a lot of the work for us. It will 
 POST SERIALIZER
 
 The post serializer will perform the same as the pet behavior but it will also give us a reference of our other table.
+
+```
+
+```
