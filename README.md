@@ -1,6 +1,6 @@
 `Any terminal commands or python code will appear in code blocks like this one`
 
-<!-- this area will be the app description -->
+_More information about the Models and the Views will be at the bottom_
 
 # PET-FOUND
 
@@ -193,34 +193,48 @@ Great, now that we moved past the initial setup we can start working on the rest
 
 _Since the models are finished we just need to add the views to be able to perform CRUD features_
 
-<!-- INCLUDE SECTION HERE FOR THE MODELS -->
+## Models
 
-PET BEHAVIOR
+Here is the link to view the ERD:
 
-table pet_behavior {
+https://dbdiagram.io/d/pet-found-6648f1b5f84ecd1d2288b39a
+
+_Let us take a look at the models_
+
+- The first model is for the pet behaviors. Each post will require to choose one pet behavior reference.
+
+- The max character length will be 100 characters
+
+```mermaid
+erDiagram
+
+pet_behavior {
 id int pk
 behavior varchar(100)
 }
+```
 
-The reason that I included this table in the project was to give the users a fixed set of options to choose from.
+The reason that I included this table in the project was to give the users a fixed set of options to choose from. Most posts about lost and found pets do not specify if the pet is friendly or runs away, which is why I wanted to include that here so that it can be chosen when creating a post.
 
-Most posts about lost and found pets do not specify if the pet is friendly or runs away, which is why I wanted to include that here so that it can be chosen when creating a post.
+- The next model will be the main content (post) to display.
 
-POST
+```mermaid
+erDiagram
 
-table post {
+post {
 id int pk
 contact_email varchar(300)
 date_created datetime
-pet_behavior_id fk
-pet_age varchar(50)
+pet_behavior_id int fk
+pet_age int
 pet_breed varchar(100)
 pet_color varchar(100)
-pet_description text(500)
+pet_description varchar(500)
 pet_favorite_snack varchar(100)
-pet_image_ur text(500)
+pet_image_url varchar(500)
 pet_name varchar(100)
 }
+```
 
 contact_email - user that lost or found the pet can write their email down.
 date_created - this field will automatically be inserted when a post is created.
@@ -233,32 +247,120 @@ pet_favorite_snack - this can be helpful for people who lost pets.
 pet_image_url - at this time i will only include a way to add urls.
 pet_name - if the pet has a colar this can be used for the pet name
 
-<!-- INCLUDE SECTION HERE FOR THE VIEWS -->
+## Views
 
-PET BEHAVIOR VIEW
+_At this time anyone can create, read, update and delete the data. I will implement authorization at a later time._
 
-This view class will have the following features:
-list all pet behaviors
+The first view I added is the pet behavior view. This is responsible for any http requests in the /petbehaviors url.
 
-POST VIEW
+The view has 5 methods: create, destroy, list, retrieve, update
 
-The post view class will have the following features:
+The create method will:
 
-1. Return all posts
-2. Return a single post
-3. Add a post
-4. Delete a post
+1. Extract the data that was sent in a POST request.
+2. Check if any of the data is missing.
+3. Create a new pet behavior and add it to the database.
+4. Serialize the new data.
+5. Returns the data with a 201 status.
 
-Deleting a post will be included but commented out to prevent users from deleting other posts.
+The destroy method will:
 
-PET BEHAVIOR SERIALIZER
+1. Take the primary key from the url.
+2. Checks if a primary key was given.
+3. Attempt to retrieve the data that matches the primary key.
+4. Deletes the data from the database.
+5. Returns a 204 status.
 
-The pet behavior serializer will take care of a lot of the work for us. It will convert our data to and from JSON format.
+The list method will:
 
-POST SERIALIZER
+1. Get all of the pet behaviors from the database.
+2. Serialize the data.
+3. Returns the serialized data and a 200 status.
 
-The post serializer will perform the same as the pet behavior but it will also give us a reference of our other table.
+The retrieve method will:
 
-```
+1. Take the primary key from the url.
+2. Checks if a primary key was given.
+3. Attempt to retrieve the data that matches the primary key.
+4. Serialize the data.
+5. Returns the serialized data and a 200 status.
 
-```
+The update method will:
+
+1. Take the primary key from the url.
+2. Checks if a primary key was given.
+3. Extract the data that was sent in a PUT request.
+4. Attempt to retrieve the data that matches the primary key.
+5. Serialize the request data.
+6. Check if the request data is valid.
+7. Extract the updated data from the validated data.
+8. Update the existing information with the new data (not the date created).
+9. Returns a 204 status.
+
+The second view I added is the post view. This is responsible for any http requests in the /posts url.
+
+Just like before the view has 5 methods: create, destroy, list, retrieve, update.
+
+The create method will:
+
+1. Extract the data that was sent in a POST request.
+2. Check if any of the data is missing.
+3. Attempt to retrieve an existing pet behavior instance.
+4. Create a new post and add it to the database.
+5. Serialize the new data.
+6. Returns the data with a 201 status.
+
+The destroy method will:
+
+1. Take the primary key from the url.
+2. Checks if a primary key was given.
+3. Attempt to retrieve the data that matches the primary key.
+4. Deletes the data from the database.
+5. Returns a 204 status.
+
+The list method will:
+
+1. Get all of the posts from the database.
+2. Serialize the data.
+3. Returns the serialized data and a 200 status.
+
+The retrieve method will:
+
+1. Take the primary key from the url.
+2. Checks if a primary key was given.
+3. Attempt to retrieve the data that matches the primary key.
+4. Serialize the data.
+5. Returns the serialized data and a 200 status.
+
+The update method will:
+
+1. Take the primary key from the url.
+2. Checks if a primary key was given.
+3. Extract the data that was sent in a PUT request.
+4. Attempt to retrieve the data that matches the primary key.
+5. Serialize the request data.
+6. Check if the request data is valid.
+7. Extract the updated data from the validated data.
+8. Update the existing information with the new data (not the date created).
+9. Returns a 204 status.
+
+## Testing the endpoints
+
+Here is how I tested the both endpoints:
+
+_I used the Postman extention to test the endpoints_
+
+1. Start the program using the debugger.
+2. In postman I used the following url to...
+
+_Get the list or submit a post request_
+
+- `http://localhost:8000/posts`
+- `http://localhost:8000/petbehaviors`
+
+_Get a single item from the list, update a single item from the list, delete a single item from the list_
+
+_Finds the item with the id of 1_
+
+- `http://localhost:8000/posts/1`
+- `http://localhost:8000/petbehaviors/1`

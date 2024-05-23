@@ -21,7 +21,7 @@ class PetBehaviorViewSet(viewsets.ViewSet):
         if (behavior == None): return Response(status=status.HTTP_400_BAD_REQUEST)
 
         pet_behavior = PetBehavior.objects.create(
-            behavior=behavior
+            behavior = behavior
         )
 
         serialized = PetBehaviorSerializer(pet_behavior, many=False)
@@ -76,7 +76,7 @@ class PetBehaviorViewSet(viewsets.ViewSet):
             if serialized.is_valid():
                 pet_behavior.behavior = serialized.validated_data["behavior"]
 
-                serialized = PetBehaviorSerializer(pet_behavior)
+                serialized = PetBehaviorSerializer(pet_behavior, many=False)
 
                 pet_behavior.save()
 
